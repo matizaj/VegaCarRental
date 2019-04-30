@@ -7,12 +7,14 @@ using Vega.Models;
 
 namespace Vega.Resources
 {
-    public class MakesResource: KeyValuePairResource
-    {       
-        public ICollection<KeyValuePairResource> Models { get; set; }
+    public class MakesResource
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public ICollection<ModelsResource> Models { get; set; }
         public MakesResource()
         {
-            Models = new Collection<KeyValuePairResource>();
+            Models = new Collection<ModelsResource>();
         }
     }
 }
