@@ -5,6 +5,8 @@ namespace Vega.Data
 {
     public interface IVehicleRepository
     {
-        Task<Vehicle> GetVehicle(int id);
+        Task<Vehicle> GetVehicle(int id, bool includeRelated = true);
+        void RemoveVehicle(int id);
+        void AddVehicle(Vehicle vehicle);
     }
 }
