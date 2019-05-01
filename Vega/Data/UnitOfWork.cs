@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
+using Vega.Data;
 
-namespace Vega.Data
+namespace Vega.Core
 {
     public class UnitOfWork : IUnitOfWork
     {

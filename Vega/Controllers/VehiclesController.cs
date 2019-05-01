@@ -6,8 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Vega.Data;
-using Vega.Models;
+using Vega.Core.Models;
 using Vega.Resources;
+using Vega.Core;
 
 namespace Vega.Controllers
 {
