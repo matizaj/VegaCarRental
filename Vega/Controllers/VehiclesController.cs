@@ -50,9 +50,10 @@ namespace Vega.Controllers
             {
                 return NotFound();
             }
-
+            mapper.Map<SaveVehicleResources, Vehicle>(vehicleRes, vehicle);
             // vehicle.LastUpdate = DateTime.Now;
             await unitOfWork.CompleteAsync();
+            vehicle = await repository.GetVehicle(vehicle.Id);
             var result = mapper.Map<Vehicle, VehicleResources>(vehicle);
             return Ok(result);
         }
