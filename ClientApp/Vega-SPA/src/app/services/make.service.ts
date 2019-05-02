@@ -16,4 +16,8 @@ export class MakeService {
       return response;
     }));
   }
+
+  create(vehicle) {
+    return this.http.post(this.url + '/api/vehicles', vehicle);
+  }
 }
