@@ -9,6 +9,7 @@ using Vega.Data;
 using Vega.Core.Models;
 using Vega.Resources;
 using Vega.Core;
+using Microsoft.AspNetCore.Cors;
 
 namespace Vega.Controllers
 {
@@ -25,6 +26,7 @@ namespace Vega.Controllers
             this.repository = repository;
             this.unitOfWork = unitOfWork;
         }
+
 
         [HttpPost]
         public async Task<IActionResult> CreateVehicle([FromBody] SaveVehicleResources vehicleRes)

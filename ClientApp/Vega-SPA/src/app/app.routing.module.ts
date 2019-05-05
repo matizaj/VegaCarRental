@@ -1,9 +1,12 @@
 import { Routes, RouterModule } from '@angular/router';
 import { VehicleFormComponent } from './vehicle-form/vehicle-form.component';
 import { NgModule } from '@angular/core';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 const approutes: Routes = [
-    {path: 'vehicle', component: VehicleFormComponent}
+    {path: 'vehicles', component: VehicleFormComponent},
+    {path: 'vehicles/:id', component: VehicleFormComponent},
+    {path: 'not-found', component: NotFoundComponent}
 ];
 
 @NgModule({
