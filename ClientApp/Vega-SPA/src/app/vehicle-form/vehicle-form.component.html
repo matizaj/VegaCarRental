@@ -9,7 +9,7 @@
     </select>
     <div class="alert alert-danger" *ngIf="make.touched && make.invalid">Please specify the make</div>
   </div>
-  <div class="form-group">     
+  <div class="form-group">
     <label for="model">Model</label>
     <select id="model" class="form-control" [(ngModel)]="vehicle.modelId" name="modelId">
       <option value=""></option>
@@ -17,16 +17,16 @@
     </select>
     <p>Is the vehicle registered?</p>
     <label for="isRegistered" class="radio-inline">
-        <input type="radio" name="isRegistered" id="isRegistered" value="true" [(ngModel)]="vehicle.isRegistered">Yes
+        <input type="radio" name="isRegistered" id="isRegistered" [value]="true" [(ngModel)]="vehicle.isRegistered">Yes
       </label>
     <label for="notRegistered" class="radio-inline">
-      <input type="radio" name="isRegistered" id="notRegistered" value="false" [(ngModel)]="vehicle.isRegistered">No
+      <input type="radio" name="isRegistered" id="notRegistered" [value]="false" [(ngModel)]="vehicle.isRegistered">No
     </label>
   </div>
   <h2>Features</h2>
   <div *ngFor="let f of features" class="checkbox">
     <label for="features {{f.id}}">
-    <input type="checkbox" id="features {{f.id}}" (change)="onFeatureToggle(f.id, $event)">{{f.name}}
+    <input type="checkbox" id="features {{f.id}}" (change)="onFeatureToggle(f.id, $event)" [checked]="vehicle.features.includes(f.id)">{{f.name}}
   </label>
   </div>
   <h2>Contact</h2>
@@ -34,4 +34,5 @@
   <div class="form-group"><label for="phone">Phone</label><input type="text" id="phpne" class="form-control" [(ngModel)]="vehicle.contact.phone" name="contactPhone"></div>
   <div class="form-group"><label for="email">Email</label><input type="text" id="email" class="form-control" [(ngModel)]="vehicle.contact.email" name="contactEmail"></div>
   <button class="btn btn-primary" [disabled]="f.invalid">Save</button>
+  <button *ngIf="vehicle.id" type="button" class="btn btn-danger" (click)="onDelete()">Delete</button>
 </form>

@@ -8,8 +8,8 @@ export class AppErrorHandler implements ErrorHandler {
     }
     handleError(error: any): void {
         Raven.captureException(error.originalError || error);
-        console.log('ERROR');
-         this.toasty.error({title: 'ERROR', msg: 'UNexpected error happend', theme: 'bootstrap', showClose: true, timeout: 5000});
+        console.log('ERROR', error);
+         this.toasty.error({title: 'error', msg: error.message, theme: 'bootstrap', showClose: true, timeout: 5000});
     }
 
 }

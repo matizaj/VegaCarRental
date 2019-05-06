@@ -2,6 +2,10 @@
 <h1>Testowa stronka wypozyczalni aut</h1>
 
 <nav>
-  <a [routerLink]="['/vehicle']" routerLinkActive="router-link-active">Vehicle</a>
+  <ul class="nav navbar-nav">
+  <a [routerLink]="['/vehicles/new']" routerLinkActive="router-link-active"><span class="glyphicon glyphicon-plus"></span> New Vehicle</a>
+  <br>
+  <a [routerLink]="['/vehicles']" routerLinkActive="router-link-active"><span class="glyphicon glyphicon-home"></span> Vehicles</a>
+</ul>
 </nav>
 <router-outlet></router-outlet>

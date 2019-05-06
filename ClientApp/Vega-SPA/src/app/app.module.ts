@@ -12,6 +12,7 @@ import { ToastyModule } from 'ng2-toasty';
 import {AppErrorHandler} from 'app.error-handler';
 import * as Raven from 'raven-js';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { VehicleListComponent } from './vehicle-list/vehicle-list.component';
 
 Raven.config('https://fc2877bb926945bda6a01cc8d0aa84c2@sentry.io/1452823').install();
 
@@ -19,7 +20,8 @@ Raven.config('https://fc2877bb926945bda6a01cc8d0aa84c2@sentry.io/1452823').insta
   declarations: [
     AppComponent,
     VehicleFormComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    VehicleListComponent
   ],
   imports: [
     BrowserModule,

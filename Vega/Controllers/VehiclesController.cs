@@ -87,5 +87,12 @@ namespace Vega.Controllers
             var result = mapper.Map<Vehicle, VehicleResources>(vehicle);
             return Ok(result);
         }
+
+        [HttpGet]
+        public async Task<IEnumerable<VehicleResources>> GetVehicles()
+        {
+            var vehicle = await repository.GetAllVehicles();
+            return mapper.Map<IEnumerable<Vehicle>, IEnumerable<VehicleResources>>(vehicle);
+        }
     }
 }

@@ -25,4 +25,15 @@ export class MakeService {
   getVehicle(id) {
     return this.http.get(this.url + '/api/vehicles/' + id);
   }
+  update(vehicle) {
+    return this.http.put(this.url + '/api/vehicles/' + vehicle.id, vehicle);
+  }
+
+  delete(id: number) {
+    return this.http.delete(this.url + '/api/vehicles/' + id);
+  }
+
+  getAllVehicles() {
+    return this.http.get(this.url + '/api/vehicles');
+  }
 }

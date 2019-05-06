@@ -47,7 +47,7 @@ export class VehicleFormComponent implements OnInit {
     }
 
     this.requestMultipleDataFromDifferentSources(sources).subscribe(data => {
-      this.makeService.getMakes = data[0];
+      this.makes = data[0];
       this.features = data[1];
       if (this.vehicle.id) {
         this.setVehicle(data[2]);
@@ -57,6 +57,10 @@ export class VehicleFormComponent implements OnInit {
       if (err.status == 404) {
         this.router.navigate(['/not-found']);
       }
+    });
+
+    this.makeService.getMakes().subscribe(x => {
+      this.toasty.success({title: 'success', msg: 'pobrane', theme: 'bootstrap', showClose: true, timeout: 5000});
     });
   }
 
@@ -78,7 +82,7 @@ export class VehicleFormComponent implements OnInit {
   }
 
   private populateModels() {
-    console.log('vahicler', this.vehicle);
+    console.log('id=1', this.makes.find(x =>x.id == 5));
     const selectedMake = this.makes.find(x => x.id == this.vehicle.makeId);
      console.log('selected', selectedMake);
      this.models = selectedMake ? selectedMake.models : [];
@@ -92,8 +96,21 @@ export class VehicleFormComponent implements OnInit {
       this.vehicle.features.splice(index, 1);
     }
   }
+  onDelete() {
+    if (confirm('Are you sure?')) {
+      this.makeService.delete(this.vehicle.id).subscribe( x => {
+        this.toasty.success({title: 'success', msg: 'deleted', theme: 'bootstrap', showClose: true, timeout: 5000});
+        this.router.navigate(['/vehicles']);
+      });
+    }
+  }
 
   submit() {
+    if (this.vehicle.id) {
+      this.makeService.update(this.vehicle).subscribe(x => {
+        this.toasty.success({title: 'success', msg: 'updated', theme: 'bootstrap', showClose: true, timeout: 5000});
+      });
+    }
     this.makeService.create(this.vehicle).subscribe(data => {
       console.log(data);
     });
