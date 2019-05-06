@@ -66,6 +66,7 @@ export class VehicleFormComponent implements OnInit {
 
   private setVehicle(v: Vehicle) {
     this.vehicle.id = v.id;
+    console.log('to jest wazne, set mth' , this.vehicle.id);
     this.vehicle.makeId = v.make.id;
     this.vehicle.modelId = v.model.id;
     this.vehicle.isRegistered = v.isRegistered;
@@ -82,9 +83,7 @@ export class VehicleFormComponent implements OnInit {
   }
 
   private populateModels() {
-    console.log('id=1', this.makes.find(x =>x.id == 5));
     const selectedMake = this.makes.find(x => x.id == this.vehicle.makeId);
-     console.log('selected', selectedMake);
      this.models = selectedMake ? selectedMake.models : [];
   }
 
@@ -110,10 +109,10 @@ export class VehicleFormComponent implements OnInit {
       this.makeService.update(this.vehicle).subscribe(x => {
         this.toasty.success({title: 'success', msg: 'updated', theme: 'bootstrap', showClose: true, timeout: 5000});
       });
-    }
-    this.makeService.create(this.vehicle).subscribe(data => {
-      console.log(data);
-    });
+    } else {
+      console.log(this.vehicle.id+1);
+      this.makeService.create(this.vehicle).subscribe(console.log);
   }
+}
 
 }
