@@ -33,7 +33,17 @@ export class MakeService {
     return this.http.delete(this.url + '/api/vehicles/' + id);
   }
 
-  getAllVehicles() {
-    return this.http.get(this.url + '/api/vehicles');
+  getAllVehicles(filter) {
+    return this.http.get(this.url + '/api/vehicles' + '?' + this.toQueryString(filter));
+  }
+  toQueryString(obj) {
+    const parts = [];
+    for (let property in obj) {
+      let value = obj[property];
+      if (value != null && value != undefined) {
+        parts.push(encodeURIComponent(property) + '=' + encodeURIComponent(value));
+      }
+    }
+    return parts.join('&');
   }
 }
