@@ -47,8 +47,8 @@ export class MakeService {
   }
   toQueryString(obj) {
     const parts = [];
-    for (let property in obj) {
-      let value = obj[property];
+    for (const property of obj) {
+      const value = obj[property];
       if (value != null && value != undefined) {
         parts.push(encodeURIComponent(property) + '=' + encodeURIComponent(value));
       }

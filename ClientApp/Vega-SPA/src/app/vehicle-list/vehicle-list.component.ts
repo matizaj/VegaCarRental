@@ -9,36 +9,38 @@ import { Vehicle } from '../models/vehicle';
 })
 export class VehicleListComponent implements OnInit {
   vehicles: Vehicle[];
-  allVehicles: Vehicle[];
   makes: any[];
-<<<<<<< HEAD
-  filter: any = {};
-=======
+  query: any = {};
 
->>>>>>> c18796abd286861eb91fd088ec8a9e68e850fb96
   constructor(private makeServices: MakeService) { }
 
   ngOnInit() {
-    this.makeServices.getAllVehicles().subscribe((x: Vehicle[]) => this.vehicles = this.allVehicles = x);
+    this.populateVehicles();
     this.makeServices.getMakes().subscribe((data: any[]) => this.makes = data);
 
   }
 
-  onFilterChange() {
-    let vehicles = this.allVehicles;
+ private populateVehicles() {
+    this.makeServices.getAllVehicles(this.query).subscribe((x: Vehicle[]) => this.vehicles = x);
+  }
 
-    if (this.filter.makeId) {
-      vehicles = vehicles.filter(v => v.make.id == this.filter.makeId);
-    }
-    if (this.filter.modelId) {
-      vehicles = vehicles.filter(v => v.model.id == this.filter.modelId);
-    }
-    this.vehicles = vehicles;
+  onFilterChange() {
+   this.populateVehicles();
   }
 
   resetFilter() {
-    this.filter = {};
+    this.query = {};
     this.onFilterChange();
+  }
+  sortBy(columnName: string) {
+    console.log('sort');
+    if (this.query.sortBy === columnName) {
+      this.query.isSortAsc = false;
+    } else {
+      this.query.sortBy = columnName;
+      this.query.isSortAsc = true;
+    }
+    this.populateVehicles();
   }
 
 }
