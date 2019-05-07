@@ -26,7 +26,9 @@ export class MakeService {
   }
 
   create(vehicle: SaveVehicle) {
-    return this.http.post(this.url + '/api/vehicles', vehicle);
+    return this.http.post(this.url + '/api/vehicles', vehicle).pipe(map((response) => {
+      return response;
+    }));
   }
 
   getVehicle(id) {

@@ -18,7 +18,7 @@ export class VehicleFormComponent implements OnInit {
   models: any[];
   features: any[];
   vehicle: SaveVehicle = {
-    id: 0,
+    id: 1,
     makeId: 0,
     modelId: 0,
     isRegistered: false,
@@ -42,14 +42,18 @@ export class VehicleFormComponent implements OnInit {
       this.makeService.getMakes(),
       this.featureService.getFeatures()
     ];
+    console.log(this.vehicle.id);
     if (this.vehicle.id) {
       sources.push(this.makeService.getVehicle(this.vehicle.id));
     }
 
     this.requestMultipleDataFromDifferentSources(sources).subscribe(data => {
       this.makes = data[0];
+      console.log(this.makes);
       this.features = data[1];
-      if (this.vehicle.id) {
+      this.vehicle = data[2]
+;      console.log(this.vehicle);
+       if (this.vehicle.id) {
         this.setVehicle(data[2]);
         this.populateModels();
       }
@@ -58,15 +62,10 @@ export class VehicleFormComponent implements OnInit {
         this.router.navigate(['/not-found']);
       }
     });
-
-    this.makeService.getMakes().subscribe(x => {
-      this.toasty.success({title: 'success', msg: 'pobrane', theme: 'bootstrap', showClose: true, timeout: 5000});
-    });
   }
 
   private setVehicle(v: Vehicle) {
     this.vehicle.id = v.id;
-    console.log('to jest wazne, set mth' , this.vehicle.id);
     this.vehicle.makeId = v.make.id;
     this.vehicle.modelId = v.model.id;
     this.vehicle.isRegistered = v.isRegistered;
@@ -110,7 +109,7 @@ export class VehicleFormComponent implements OnInit {
         this.toasty.success({title: 'success', msg: 'updated', theme: 'bootstrap', showClose: true, timeout: 5000});
       });
     } else {
-      console.log(this.vehicle.id+1);
+      console.log(this.vehicle.id + 1);
       this.makeService.create(this.vehicle).subscribe(console.log);
   }
 }
