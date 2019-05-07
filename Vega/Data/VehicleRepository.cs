@@ -42,13 +42,19 @@ namespace Vega.Data
             context.Vehicles.Add(vehicle);
         }
 
-        public async Task<IEnumerable<Vehicle>> GetAllVehicles()
+        public async Task<IEnumerable<Vehicle>> GetAllVehicles(Filter filter)
         {
-            return await context.Vehicles
+            var query = context.Vehicles
                .Include(v => v.Features)
                .ThenInclude(vf => vf.Feature).
                Include(v => v.Model)
-               .ThenInclude(m => m.Make).ToListAsync();
+               .ThenInclude(m => m.Make).AsQueryable();
+
+            if (filter.MakeId.HasValue)
+            {
+                query = query.Where(v => v.Model.MakeId == filter.MakeId.Value);
+            }
+            return await query.ToListAsync()
         }
     }
 }

@@ -56,6 +56,8 @@ namespace Vega.Mapping
                                                           }
                                                       }
                                                   });
+
+            CreateMap<FilterResource, Filter>();
         }
     }
 }
