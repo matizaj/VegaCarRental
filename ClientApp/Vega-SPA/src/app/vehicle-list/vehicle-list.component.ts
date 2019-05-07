@@ -11,7 +11,11 @@ export class VehicleListComponent implements OnInit {
   vehicles: Vehicle[];
   allVehicles: Vehicle[];
   makes: any[];
+<<<<<<< HEAD
   filter: any = {};
+=======
+
+>>>>>>> c18796abd286861eb91fd088ec8a9e68e850fb96
   constructor(private makeServices: MakeService) { }
 
   ngOnInit() {
