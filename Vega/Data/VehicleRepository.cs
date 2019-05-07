@@ -42,7 +42,7 @@ namespace Vega.Data
             context.Vehicles.Add(vehicle);
         }
 
-        public async Task<IEnumerable<Vehicle>> GetAllVehicles(Filter filter)
+        public async Task<IEnumerable<Vehicle>> GetAllVehicles(VehicleQuery queryObj)
         {
             var query = context.Vehicles
                .Include(v => v.Features)
@@ -50,11 +50,32 @@ namespace Vega.Data
                Include(v => v.Model)
                .ThenInclude(m => m.Make).AsQueryable();
 
-            if (filter.MakeId.HasValue)
+            if (queryObj.MakeId.HasValue)
             {
-                query = query.Where(v => v.Model.MakeId == filter.MakeId.Value);
+                query = query.Where(v => v.Model.MakeId == queryObj.MakeId.Value);
             }
-            return await query.ToListAsync()
+
+            if (queryObj.SortBy == "make")
+            {
+                query = (queryObj.IsSortAsc) ? query.OrderBy(v => v.Model.Make.Name) : query.OrderByDescending(v => v.Model.Make.Name);
+            }
+
+            if (queryObj.SortBy == "model")
+            {
+                query = (queryObj.IsSortAsc) ? query.OrderBy(v => v.Model.Name) : query.OrderByDescending(v => v.Model.Name);
+            }
+
+            if (queryObj.SortBy == "contactName")
+            {
+                query = (queryObj.IsSortAsc) ? query.OrderBy(v => v.ContactName) : query.OrderByDescending(v => v.ContactName);
+            }
+
+            if (queryObj.SortBy == "id")
+            {
+                query = (queryObj.IsSortAsc) ? query.OrderBy(v => v.Id) : query.OrderByDescending(v => v.Id);
+            }
+
+            return await query.ToListAsync();
         }
     }
 }

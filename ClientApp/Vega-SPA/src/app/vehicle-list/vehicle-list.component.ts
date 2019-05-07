@@ -10,6 +10,7 @@ import { Vehicle } from '../models/vehicle';
 export class VehicleListComponent implements OnInit {
   vehicles: Vehicle[];
   makes: any[];
+
   constructor(private makeServices: MakeService) { }
 
   ngOnInit() {

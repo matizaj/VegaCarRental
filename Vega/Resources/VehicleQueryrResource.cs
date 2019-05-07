@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 
 namespace Vega.Resources
 {
-    public class FilterResource
+    public class VehicleQueryResource
     {
         public int? MakeId { get; set; }
+        public string SortBy { get; set; }
+        public bool IsSortAsc { get; set; }
     }
 }
