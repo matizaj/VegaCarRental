@@ -1,0 +1,13 @@
+<nav>
+  <ul class="pagination">
+    <li>
+      <a (click)="previous()"><span aria-hidden="true" aria-label="Previous">&laquo;</span></a>
+    </li>
+    <li>
+      <a *ngFor="let page of pages" (click)="changePage(page)">{{page}}</a>
+    </li>
+    <li>
+      <a (click)="next()"><span aria-hidden="true" aria-label="Next">&raquo;</span></a>
+    </li>
+  </ul>
+</nav>

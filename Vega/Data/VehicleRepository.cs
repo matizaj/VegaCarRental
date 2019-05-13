@@ -44,8 +44,11 @@ namespace Vega.Data
             context.Vehicles.Add(vehicle);
         }
 
-        public async Task<IEnumerable<Vehicle>> GetAllVehicles(VehicleQuery queryObj)
+        public async Task<QueryResults<Vehicle>> GetAllVehicles(VehicleQuery queryObj)
         {
+
+            var queryResult = new QueryResults<Vehicle>();
+
             var query = context.Vehicles
                .Include(v => v.Features)
                .ThenInclude(vf => vf.Feature).
@@ -90,9 +93,13 @@ namespace Vega.Data
             //    query = (queryObj.IsSortAsc) ? query.OrderBy(v => v.Id) : query.OrderByDescending(v => v.Id);
             //}
 
+            queryResult.TotalItems = await query.CountAsync();
+
             query = query.ApplyPaging(queryObj);
 
-            return await query.ToListAsync();
+            queryResult.Items = await query.ToListAsync();
+
+            return queryResult;
         }
 
         

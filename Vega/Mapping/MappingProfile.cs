@@ -13,6 +13,7 @@ namespace Vega.Mapping
         public MappingProfile()
         {
             // domain to api
+            CreateMap(typeof(QueryResults<>), typeof(QueryResultsResource<>));
             CreateMap<Make, MakesResource>();
             CreateMap<Make, KeyValuePairResource>();
             CreateMap<Model, KeyValuePairResource>();
