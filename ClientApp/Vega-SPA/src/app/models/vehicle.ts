@@ -5,7 +5,6 @@ export interface Vehicle {
     isRegistered: boolean;
     features: any[];
     contact: Contact;
-    lastUpdate: string;
 }
 export interface SaveVehicle {
     id: number;

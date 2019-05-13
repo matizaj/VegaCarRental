@@ -22,7 +22,7 @@ export class VehicleFormComponent implements OnInit {
   };
 
   vehicle: SaveVehicle = {
-    id: 0,
+    id: 1,
     makeId: 0,
     modelId: 0,
     isRegistered: false,
@@ -46,14 +46,16 @@ export class VehicleFormComponent implements OnInit {
       this.makeService.getMakes(),
       this.featureService.getFeatures()
     ];
+    console.log(this.vehicle.id);
     if (this.vehicle.id) {
       sources.push(this.makeService.getVehicle(this.vehicle.id));
     }
 
     this.requestMultipleDataFromDifferentSources(sources).subscribe(data => {
       this.makes = data[0];
+      console.log(this.makes);
       this.features = data[1];
-      if (this.vehicle.id) {
+       if (this.vehicle.id) {
         this.setVehicle(data[2]);
         this.populateModels();
       }
@@ -61,10 +63,6 @@ export class VehicleFormComponent implements OnInit {
       if (err.status == 404) {
         this.router.navigate(['/not-found']);
       }
-    });
-
-    this.makeService.getMakes().subscribe(x => {
-      this.toasty.success({title: 'success', msg: 'pobrane', theme: 'bootstrap', showClose: true, timeout: 5000});
     });
   }
 
@@ -86,9 +84,7 @@ export class VehicleFormComponent implements OnInit {
   }
 
   private populateModels() {
-    console.log('id=1', this.makes.find(x =>x.id == 5));
     const selectedMake = this.makes.find(x => x.id == this.vehicle.makeId);
-     console.log('selected', selectedMake);
      this.models = selectedMake ? selectedMake.models : [];
   }
 
@@ -114,10 +110,10 @@ export class VehicleFormComponent implements OnInit {
       this.makeService.update(this.vehicle).subscribe(x => {
         this.toasty.success({title: 'success', msg: 'updated', theme: 'bootstrap', showClose: true, timeout: 5000});
       });
-    }
-    this.makeService.create(this.vehicle).subscribe(data => {
-      console.log(data);
-    });
+    } else {
+      console.log(this.vehicle.id + 1);
+      this.makeService.create(this.vehicle).subscribe(console.log);
   }
+}
 
 }

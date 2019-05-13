@@ -11,7 +11,7 @@
   </div>
   <div class="form-group">
     <label for="model">Model</label>
-    <select id="model" class="form-control" [(ngModel)]="vehicle.modelId" name="modelId">
+    <select id="model" class="form-control" [(ngModel)]="vehicle.modelId" name="modelId" #model="ngModel">
       <option value=""></option>
       <option *ngFor="let m of models" value="{{m.id}}">{{m.name}}</option>
     </select>
@@ -33,6 +33,6 @@
   <div class="form-group"><label for="contactName">Name</label><input type="text" id="contactName" class="form-control" [(ngModel)]="vehicle.contact.name" name="contactName"></div>
   <div class="form-group"><label for="phone">Phone</label><input type="text" id="phpne" class="form-control" [(ngModel)]="vehicle.contact.phone" name="contactPhone"></div>
   <div class="form-group"><label for="email">Email</label><input type="text" id="email" class="form-control" [(ngModel)]="vehicle.contact.email" name="contactEmail"></div>
-  <button class="btn btn-primary" [disabled]="f.invalid">Save</button>
+  <button class="btn btn-primary">Save</button>
   <button *ngIf="vehicle.id" type="button" class="btn btn-danger" (click)="onDelete()">Delete</button>
 </form>
