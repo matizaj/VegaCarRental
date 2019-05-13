@@ -90,7 +90,7 @@ namespace Vega.Data
             //    query = (queryObj.IsSortAsc) ? query.OrderBy(v => v.Id) : query.OrderByDescending(v => v.Id);
             //}
 
-            query = query.Skip((queryObj.))
+            query = query.ApplyPaging(queryObj);
 
             return await query.ToListAsync();
         }
