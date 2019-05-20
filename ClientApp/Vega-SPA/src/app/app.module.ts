@@ -1,3 +1,4 @@
+import { PhotoService } from './services/photo.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -14,6 +15,7 @@ import * as Raven from 'raven-js';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { VehicleListComponent } from './vehicle-list/vehicle-list.component';
 import { PaginationComponent } from './pagination/pagination.component';
+import { VehicleViewComponent } from './vehicle-view/vehicle-view.component';
 
 Raven.config('https://fc2877bb926945bda6a01cc8d0aa84c2@sentry.io/1452823').install();
 
@@ -23,7 +25,8 @@ Raven.config('https://fc2877bb926945bda6a01cc8d0aa84c2@sentry.io/1452823').insta
     VehicleFormComponent,
     NotFoundComponent,
     VehicleListComponent,
-    PaginationComponent
+    PaginationComponent,
+    VehicleViewComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +35,7 @@ Raven.config('https://fc2877bb926945bda6a01cc8d0aa84c2@sentry.io/1452823').insta
     HttpClientModule,
     ToastyModule.forRoot()
   ],
-  providers: [MakeService, FeatureService, {provide: ErrorHandler, useClass: AppErrorHandler}],
+  providers: [MakeService, FeatureService, {provide: ErrorHandler, useClass: AppErrorHandler}, PhotoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

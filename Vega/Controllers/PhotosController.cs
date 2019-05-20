@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,26 +22,34 @@ namespace Vega.Controllers
         private readonly IVehicleRepository repository;
         private readonly IUnitOfWork uow;
         private readonly IMapper mapper;
+        private readonly IOptionsSnapshot<PhotoSettings> options;
+        private readonly PhotoSettings photoSettings;
 
-        public PhotosController(IHostingEnvironment host, IVehicleRepository repository, IUnitOfWork uow, IMapper mapper)
+        public PhotosController(IHostingEnvironment host, IVehicleRepository repository, IUnitOfWork uow, IMapper mapper, IOptionsSnapshot<PhotoSettings> options)
         {
             this.host = host;
             this.repository = repository;
             this.uow = uow;
             this.mapper = mapper;
+            this.photoSettings = options.Value;
         }
         [HttpPost]
         public async Task<IActionResult> Upload(int vehicleId, IFormFile file)
         {
+            string k;
             var vehicle = await repository.GetVehicle(vehicleId, includeRelated: false);
             var test = host.WebRootPath;
             if(vehicle == null)
             {
                 return NotFound();
             }
-            try
-            {
+           
+                if (file.Length > photoSettings.MaxBytes) return BadRequest("Max file");
+                if (file.Length == 0) return BadRequest("Empty file");
+                if (!photoSettings.isSuppored(file.FileName)) return BadRequest("incorrect file type");
+
                 var uploadsFolderPath = Path.Combine(test, "uploads");
+
                 if (!Directory.Exists(uploadsFolderPath))
                 {
                     Directory.CreateDirectory(uploadsFolderPath);
@@ -57,12 +66,7 @@ namespace Vega.Controllers
                 var photo = new Photo { FileName = fileName };
                 vehicle.Photos.Add(photo);
                 await uow.CompleteAsync();
-                return Ok(mapper.Map<Photo, PhotoResource>(photo));
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e);
-            }
+                return Ok(mapper.Map<Photo, PhotoResource>(photo));          
             
         }
     }
